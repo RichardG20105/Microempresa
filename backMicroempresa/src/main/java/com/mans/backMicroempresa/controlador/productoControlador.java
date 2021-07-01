@@ -23,20 +23,20 @@ public class productoControlador {
 	@Autowired
 	private productoServicios productoServicios;
 	
-	@GetMapping("buscarProdcutos")
+	@GetMapping("buscarProductos")
 	public List<Producto> getProductos(){
 		return this.productoServicios.findAll();
 	}
-	@PostMapping()
-	public Producto postProducto() {
+	@PostMapping("crearProducto")
+	public Producto crearProducto() {
 		return this.productoServicios.save(null);
 	}
-	@PutMapping()
+	@PutMapping("modificarProducto")
 	public ResponseEntity<Producto> actualizarProducto(){
 		return ResponseEntity.ok(this.productoServicios.save(null));
 	}
-	@DeleteMapping()
-	public ResponseEntity<?> deleteProducto(){
+	@DeleteMapping("borrarProducto")
+	public ResponseEntity<?> borrarProducto(){
 		return ResponseEntity.ok().build();
 	}	
 }

@@ -1,4 +1,4 @@
-package net.sgsl.accesoDatos.exception;
+package com.mans.backMicroempresa.exception;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package net.sgsl.accesoDatos.exception;
+package com.mans.backMicroempresa.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -8,10 +8,10 @@ public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idproducto")
-	private long idproducto;
+	private Long idproducto;
 	
 	@Column(name = "nombreproducto")
-	private String nombreporducto;
+	private String nombreproducto;
 	
 	@Column(name = "fotoproducto")
 	private String fotoproducto;
@@ -20,9 +20,9 @@ public class Producto {
 		super();
 	}
 	
-	public Producto(String nombreporducto, String fotoproducto) {
+	public Producto(String nombreproducto, String fotoproducto) {
 		super();
-		this.nombreporducto = nombreporducto;
+		this.nombreproducto = nombreproducto;
 		this.fotoproducto = fotoproducto;
 	}
 	
@@ -34,12 +34,12 @@ public class Producto {
 		this.idproducto = idproducto;
 	}
 	
-	public String getNombreporducto() {
-		return nombreporducto;
+	public String getNombreproducto() {
+		return nombreproducto;
 	}
 	
-	public void setNombreporducto(String nombreporducto) {
-		this.nombreporducto = nombreporducto;
+	public void setNombreproducto(String nombreproducto) {
+		this.nombreproducto = nombreproducto;
 	}
 	
 	public String getFotoproducto() {

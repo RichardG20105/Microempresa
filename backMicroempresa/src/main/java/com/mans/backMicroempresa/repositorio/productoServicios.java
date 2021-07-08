@@ -7,5 +7,5 @@ import com.mans.backMicroempresa.entidades.Producto;
 
 @Repository
 public interface productoServicios extends JpaRepository<Producto, Long> {
-
+	Boolean existsByNombreProducto(String nombreProducto);
 }

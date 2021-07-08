@@ -8,45 +8,45 @@ public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idproducto")
-	private Long idproducto;
+	private Long idProducto;
 	
 	@Column(name = "nombreproducto")
-	private String nombreproducto;
+	private String nombreProducto;
 	
 	@Column(name = "fotoproducto")
-	private String fotoproducto;
+	private String fotoProducto;
 	
 	public Producto() {
 		super();
 	}
 	
-	public Producto(String nombreproducto, String fotoproducto) {
+	public Producto(String nombreProducto, String fotoProducto) {
 		super();
-		this.nombreproducto = nombreproducto;
-		this.fotoproducto = fotoproducto;
+		this.nombreProducto = nombreProducto;
+		this.fotoProducto = fotoProducto;
 	}
 	
-	public long getIdproducto() {
-		return idproducto;
+	public long getIdProducto() {
+		return idProducto;
 	}
 	
-	public void setIdproducto(long idproducto) {
-		this.idproducto = idproducto;
+	public void setIdProducto(long idProducto) {
+		this.idProducto = idProducto;
 	}
 	
-	public String getNombreproducto() {
-		return nombreproducto;
+	public String getNombreProducto() {
+		return nombreProducto;
 	}
 	
-	public void setNombreproducto(String nombreproducto) {
-		this.nombreproducto = nombreproducto;
+	public void setNombreProducto(String nombreProducto) {
+		this.nombreProducto = nombreProducto;
 	}
 	
-	public String getFotoproducto() {
-		return fotoproducto;
+	public String getFotoProducto() {
+		return fotoProducto;
 	}
 	
-	public void setFotoproducto(String fotoproducto) {
-		this.fotoproducto = fotoproducto;
+	public void setFotoProducto(String fotoProducto) {
+		this.fotoProducto = fotoProducto;
 	}	
 }

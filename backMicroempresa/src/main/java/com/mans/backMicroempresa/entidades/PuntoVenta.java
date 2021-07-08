@@ -10,47 +10,45 @@ public class PuntoVenta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	@Column(name = "idpventa")
-	private Long idpventa;
+	private Long idPventa;
 	
 	@Column(name = "nombrepventa")
-	private String nombrepventa;
+	private String nombrePventa;
 	
 	@Column(name = "direccionpventa")
-	private String direccionpventa;
+	private String direccionPventa;
 
 	public PuntoVenta() {
 		super();
 	}
 
-	public PuntoVenta(String nombrepventa, String direccionpventa) {
+	public PuntoVenta(String nombrePventa, String direccionPventa) {
 		super();
-		this.nombrepventa = nombrepventa;
-		this.direccionpventa = direccionpventa;
+		this.nombrePventa = nombrePventa;
+		this.direccionPventa = direccionPventa;
 	}
 
 	public Long getIdpventa() {
-		return idpventa;
+		return idPventa;
 	}
 
-	public void setIdpventa(Long idpventa) {
-		this.idpventa = idpventa;
+	public void setIdpventa(Long idPventa) {
+		this.idPventa = idPventa;
 	}
 
-	public String getNombrepventa() {
-		return nombrepventa;
+	public String getNombrePventa() {
+		return nombrePventa;
 	}
 
-	public void setNombrepventa(String nombrepventa) {
-		this.nombrepventa = nombrepventa;
+	public void setNombrepventa(String nombrePventa) {
+		this.nombrePventa = nombrePventa;
 	}
 
-	public String getDireccionpventa() {
-		return direccionpventa;
+	public String getDireccionPventa() {
+		return direccionPventa;
 	}
 
-	public void setDireccionpventa(String direccionpventa) {
-		this.direccionpventa = direccionpventa;
+	public void setDireccionPventa(String direccionPventa) {
+		this.direccionPventa = direccionPventa;
 	}
-
-	
 }

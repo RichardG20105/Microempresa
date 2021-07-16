@@ -8,7 +8,6 @@ import javax.persistence.*;
 public class PuntoVenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	@Column(name = "idpventa")
 	private Long idPventa;
 	
@@ -28,11 +27,11 @@ public class PuntoVenta {
 		this.direccionPventa = direccionPventa;
 	}
 
-	public Long getIdpventa() {
+	public long getIdpventa() {
 		return idPventa;
 	}
 
-	public void setIdpventa(Long idPventa) {
+	public void setIdpventa(long idPventa) {
 		this.idPventa = idPventa;
 	}
 

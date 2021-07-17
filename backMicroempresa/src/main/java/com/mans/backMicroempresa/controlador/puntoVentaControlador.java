@@ -51,8 +51,9 @@ public class puntoVentaControlador {
 	public ResponseEntity<PuntoVenta> actualizarPuntoVenta(@PathVariable(value ="id")Long idPventa,@Valid @RequestBody PuntoVenta pventaDetalle) throws ResourceNotFoundException{
 		PuntoVenta puntoventa = puntoVentaServicios.findById(idPventa)
 				.orElseThrow(()->new ResourceNotFoundException("No existe el Punto Venta con el Id: "+idPventa));
-			puntoventa.setNombrepventa(pventaDetalle.getNombrePventa());
+			puntoventa.setNombrePventa(pventaDetalle.getNombrePventa());
 			puntoventa.setDireccionPventa(pventaDetalle.getDireccionPventa());
+			puntoventa.setCiudadPventa(pventaDetalle.getCiudadPventa());
 		return ResponseEntity.ok(this.puntoVentaServicios.save(puntoventa));
 	}
 	

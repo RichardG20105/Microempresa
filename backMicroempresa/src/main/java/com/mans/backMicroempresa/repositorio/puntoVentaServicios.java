@@ -8,5 +8,5 @@ import com.mans.backMicroempresa.entidades.PuntoVenta;
 @Repository
 
 public interface puntoVentaServicios extends JpaRepository <PuntoVenta, Long>{
-
+	Boolean existsByNombrePventa(String nombrePventa);
 }

@@ -16,22 +16,26 @@ public class PuntoVenta {
 	
 	@Column(name = "direccionpventa")
 	private String direccionPventa;
+	
+	@Column(name = "ciudadpventa")
+	private String ciudadPventa;
 
 	public PuntoVenta() {
 		super();
 	}
 
-	public PuntoVenta(String nombrePventa, String direccionPventa) {
+	public PuntoVenta(String nombrePventa, String direccionPventa, String ciudadPventa) {
 		super();
 		this.nombrePventa = nombrePventa;
 		this.direccionPventa = direccionPventa;
+		this.ciudadPventa = ciudadPventa;
 	}
 
-	public Long getIdpventa() {
+	public Long getIdPventa() {
 		return idPventa;
 	}
 
-	public void setIdpventa(Long idPventa) {
+	public void setIdPventa(Long idPventa) {
 		this.idPventa = idPventa;
 	}
 
@@ -39,7 +43,7 @@ public class PuntoVenta {
 		return nombrePventa;
 	}
 
-	public void setNombrepventa(String nombrePventa) {
+	public void setNombrePventa(String nombrePventa) {
 		this.nombrePventa = nombrePventa;
 	}
 
@@ -50,4 +54,14 @@ public class PuntoVenta {
 	public void setDireccionPventa(String direccionPventa) {
 		this.direccionPventa = direccionPventa;
 	}
+
+	public String getCiudadPventa() {
+		return ciudadPventa;
+	}
+
+	public void setCiudadPventa(String ciudadPventa) {
+		this.ciudadPventa = ciudadPventa;
+	}
+	
+		
 }

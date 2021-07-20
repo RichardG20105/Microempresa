@@ -3,7 +3,7 @@ package com.mans.backMicroempresa.entidades;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Producto")
+@Table(name = "producto")
 public class Producto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +26,14 @@ public class Producto {
 		this.fotoProducto = fotoProducto;
 	}
 	
-	public long getIdProducto() {
+	public Long getIdProducto() {
 		return idProducto;
 	}
-	
-	public void setIdProducto(long idProducto) {
+
+	public void setIdProducto(Long idProducto) {
 		this.idProducto = idProducto;
 	}
-	
+
 	public String getNombreProducto() {
 		return nombreProducto;
 	}

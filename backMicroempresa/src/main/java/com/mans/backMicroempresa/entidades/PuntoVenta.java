@@ -8,7 +8,6 @@ import javax.persistence.*;
 public class PuntoVenta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	@Column(name = "idpventa")
 	private Long idPventa;
 	

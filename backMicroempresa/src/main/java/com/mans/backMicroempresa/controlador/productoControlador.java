@@ -1,5 +1,8 @@
 package com.mans.backMicroempresa.controlador;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +19,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mans.backMicroempresa.repositorio.productoServicios;
 
@@ -38,20 +43,51 @@ public class productoControlador {
 	
 	//Crear Producto
 	@PostMapping("crearProducto")
-	public Producto crearProducto(@Valid @RequestBody Producto producto) throws ResourceNotFoundException {
+	public Producto crearProducto(@RequestParam(name = "file", required = false)MultipartFile foto,@Valid @RequestBody Producto producto) throws ResourceNotFoundException {
 		if(productoServicios.existsByNombreProducto(producto.getNombreProducto())) {
 			throw new ResourceNotFoundException("Ya existe un Producto con ese Nombre");
+		}
+		if(!foto.isEmpty()) {
+			String ruta = "C://Temp//uploads";
+			try {
+				byte[] bytes = foto.getBytes();
+				Path rutaAbsoluta = Paths.get(ruta + "//"+foto.getOriginalFilename());
+				Files.write(rutaAbsoluta, bytes);
+				producto.setFotoProducto(foto.getOriginalFilename());
+			}catch(Exception e) {
+				//Errores de foto
+			}
 		}
 		return this.productoServicios.save(producto);
 	}
 	
 	//Modificar Producto
 	@PutMapping("modificarProducto/{id}")
-	public ResponseEntity<Producto> actualizarProducto(@PathVariable(value = "id")Long idProducto,@Valid @RequestBody Producto productoDetalle) throws ResourceNotFoundException{
+	public ResponseEntity<Producto> actualizarProducto(@RequestParam(name = "file", required = false)MultipartFile foto,@PathVariable(value = "id")Long idProducto,@Valid @RequestBody Producto productoDetalle) throws ResourceNotFoundException{
 		Producto producto = productoServicios.findById(idProducto)
 				.orElseThrow(()->new ResourceNotFoundException("No existe el producto con el Id: "+idProducto));
+
 		producto.setNombreProducto(productoDetalle.getNombreProducto());
-		producto.setFotoProducto(productoDetalle.getFotoProducto());
+		if(producto.getFotoProducto() != null) {
+			try {
+				String ruta = "C://Temp//uploads";
+				Path rutaAbsoluta = Paths.get(ruta + "//"+producto.getFotoProducto());
+				Files.delete(rutaAbsoluta);
+			}catch(Exception e){
+				
+			}
+		}
+		if(!foto.isEmpty()) {
+			String ruta = "C://Temp//uploads";
+			try {
+				byte[] bytes = foto.getBytes();
+				Path rutaAbsoluta = Paths.get(ruta + "//"+foto.getOriginalFilename());
+				Files.write(rutaAbsoluta, bytes);
+				producto.setFotoProducto(foto.getOriginalFilename());
+			}catch(Exception e) {
+				//Errores de foto
+			}
+		}
 		return ResponseEntity.ok(this.productoServicios.save(producto));
 	}
 	
@@ -60,6 +96,16 @@ public class productoControlador {
 	public Map<String, Boolean> borrarProducto(@PathVariable(value = "id")Long idProducto)throws ResourceNotFoundException{
 		Producto producto = productoServicios.findById(idProducto)
 				.orElseThrow(()->new ResourceNotFoundException("No se encontro el Producto con el Id: "+idProducto));
+		if(producto.getFotoProducto() != null) {
+			try {
+				String ruta = "C://Temp//uploads";
+				Path rutaAbsoluta = Paths.get(ruta + "//"+producto.getFotoProducto());
+				
+				Files.delete(rutaAbsoluta);
+			}catch(Exception e){
+				
+			}
+		}
 		this.productoServicios.delete(producto);
 		
 		Map<String, Boolean> response = new HashMap<>();

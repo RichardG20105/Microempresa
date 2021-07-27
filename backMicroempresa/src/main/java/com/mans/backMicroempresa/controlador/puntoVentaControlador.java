@@ -46,6 +46,14 @@ public class puntoVentaControlador {
 		return this.puntoVentaServicios.save(puntoventa);
 	}
 	
+	//Buscar Punto Venta por id (get-rest api)
+	@GetMapping("buscarPuntoVentaId/{id}")
+	public ResponseEntity<PuntoVenta> buscarPuntoVentaId(@PathVariable Long id)throws ResourceNotFoundException{
+		PuntoVenta puntoventa = puntoVentaServicios.findById(id)
+				.orElseThrow(()->new ResourceNotFoundException("No existe el Punto Venta con el Id: "+id));
+		return ResponseEntity.ok(puntoventa);
+	}
+	
 	//Modificar Punto Venta
 	@PutMapping("modificarPuntoVenta/{id}")
 	public ResponseEntity<PuntoVenta> actualizarPuntoVenta(@PathVariable(value ="id")Long idPventa,@Valid @RequestBody PuntoVenta pventaDetalle) throws ResourceNotFoundException{

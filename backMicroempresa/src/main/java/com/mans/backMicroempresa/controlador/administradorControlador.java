@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mans.backMicroempresa.entidades.Administrador;
 import com.mans.backMicroempresa.exception.ResourceNotFoundException;
 import com.mans.backMicroempresa.repositorio.administradorServicios;
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/Administrador/")
@@ -32,6 +33,14 @@ public class administradorControlador {
 	public List<Administrador> getAdministradores(){
 		return this.administradorServicios.findAll();
 	}
+	
+	@GetMapping("buscarAdministradorId/{id}")
+	public ResponseEntity<Administrador> getAdminsitradorId(@PathVariable(value = "id") Long idAdministrador)
+			throws ResourceNotFoundException{
+				Administrador administrador = administradorServicios.findById(idAdministrador)
+				.orElseThrow(() -> new ResourceNotFoundException("No existe Administrador con el id ::"+idAdministrador));
+				return ResponseEntity.ok().body(administrador);
+		}
 	
 	@PostMapping("crearAdministrador")
 	public Administrador crearAdministrador(@Valid @RequestBody Administrador administrador) throws ResourceNotFoundException{

@@ -29,7 +29,7 @@ import com.mans.backMicroempresa.entidades.Producto;
 import com.mans.backMicroempresa.exception.ResourceNotFoundException;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 4800, allowCredentials = "false" )
 @RequestMapping("/Producto/")
 public class productoControlador {
 	@Autowired
@@ -41,53 +41,78 @@ public class productoControlador {
 		return this.productoServicios.findAll();
 	}
 	
+	@GetMapping("buscarProducto/{id}")
+	public ResponseEntity<Producto> buscarProductoId(@PathVariable(name = "id")Long idProducto)throws ResourceNotFoundException{
+		Producto producto = productoServicios.findById(idProducto)
+				.orElseThrow(() -> new ResourceNotFoundException("No existe un Producto con el id: "+idProducto));
+		return ResponseEntity.ok().body(producto);
+	}
+	
 	//Crear Producto
 	@PostMapping("crearProducto")
-	public Producto crearProducto(@RequestParam(name = "file", required = false)MultipartFile foto,@Valid @RequestBody Producto producto) throws ResourceNotFoundException {
+	public Producto crearProducto(@Valid @RequestBody Producto producto) throws ResourceNotFoundException {
 		if(productoServicios.existsByNombreProducto(producto.getNombreProducto())) {
 			throw new ResourceNotFoundException("Ya existe un Producto con ese Nombre");
-		}
-		if(!foto.isEmpty()) {
-			String ruta = "C://Temp//uploads";
-			try {
-				byte[] bytes = foto.getBytes();
-				Path rutaAbsoluta = Paths.get(ruta + "//"+foto.getOriginalFilename());
-				Files.write(rutaAbsoluta, bytes);
-				producto.setFotoProducto(foto.getOriginalFilename());
-			}catch(Exception e) {
-				//Errores de foto
-			}
 		}
 		return this.productoServicios.save(producto);
 	}
 	
-	//Modificar Producto
-	@PutMapping("modificarProducto/{id}")
-	public ResponseEntity<Producto> actualizarProducto(@RequestParam(name = "file", required = false)MultipartFile foto,@PathVariable(value = "id")Long idProducto,@Valid @RequestBody Producto productoDetalle) throws ResourceNotFoundException{
-		Producto producto = productoServicios.findById(idProducto)
-				.orElseThrow(()->new ResourceNotFoundException("No existe el producto con el Id: "+idProducto));
-
-		producto.setNombreProducto(productoDetalle.getNombreProducto());
-		if(producto.getFotoProducto() != null) {
-			try {
-				String ruta = "C://Temp//uploads";
-				Path rutaAbsoluta = Paths.get(ruta + "//"+producto.getFotoProducto());
-				Files.delete(rutaAbsoluta);
-			}catch(Exception e){
-				
-			}
-		}
-		if(!foto.isEmpty()) {
+	@PostMapping("subirImagen")
+	public ResponseEntity<?> subirImagen(@RequestParam(name = "file") MultipartFile file)throws ResourceNotFoundException{
+		if(!file.isEmpty()) {
 			String ruta = "C://Temp//uploads";
 			try {
-				byte[] bytes = foto.getBytes();
-				Path rutaAbsoluta = Paths.get(ruta + "//"+foto.getOriginalFilename());
+				byte[] bytes = file.getBytes();
+				Path rutaAbsoluta = Paths.get(ruta + "//"+file.getOriginalFilename());
 				Files.write(rutaAbsoluta, bytes);
-				producto.setFotoProducto(foto.getOriginalFilename());
 			}catch(Exception e) {
 				//Errores de foto
 			}
 		}
+		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping("modificarImagen/{id}")
+	public ResponseEntity<?> actualizarImagen(@PathVariable(value = "id")Long idProducto,@RequestParam(name = "file") MultipartFile file)throws ResourceNotFoundException{
+		
+		Producto producto = productoServicios.findById(idProducto)
+				.orElseThrow(()->new ResourceNotFoundException("No existe el producto con el Id: "+idProducto));
+		
+		
+		if(!file.isEmpty()) { //Si se recibe una imagen
+			String ruta = "C://Temp//uploads";
+			if(producto.getFotoProducto() != null) { //
+				try {
+					//Borra la imagen anterior
+					Path rutaAbsoluta = Paths.get(ruta + "//"+producto.getFotoProducto());
+					Files.delete(rutaAbsoluta);
+				}catch(Exception e){
+					
+				}
+			}
+			
+			try {
+				//Guarda la nueva imagen
+				byte[] bytes = file.getBytes();
+				Path rutaAbsoluta = Paths.get(ruta + "//"+file.getOriginalFilename());
+				Files.write(rutaAbsoluta, bytes);
+			}catch (Exception e) {
+				
+			}
+		}
+		return ResponseEntity.ok().build();
+		
+	}
+	
+	//Modificar Producto
+	@PutMapping("modificarProducto/{id}")
+	public ResponseEntity<Producto> actualizarProducto(@PathVariable(value = "id")Long idProducto,@Valid @RequestBody Producto productoDetalle) throws ResourceNotFoundException{
+		Producto producto = productoServicios.findById(idProducto)
+				.orElseThrow(()->new ResourceNotFoundException("No existe el producto con el Id: "+idProducto));
+		
+		producto.setNombreProducto(productoDetalle.getNombreProducto());
+		producto.setFotoProducto(productoDetalle.getFotoProducto());
+		
 		return ResponseEntity.ok(this.productoServicios.save(producto));
 	}
 	
